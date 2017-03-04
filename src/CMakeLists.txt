@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 2.8)
-add_definitions("-Wall -std=c++14 -g")
+cmake_minimum_required(VERSION 3.1)
+add_definitions("-Wall")
+set (CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(util)
 add_subdirectory(network)
@@ -10,4 +11,4 @@ add_executable(main
   server.cpp
 )
 
-target_link_libraries(main util network message)
+target_link_libraries(main network message util)
