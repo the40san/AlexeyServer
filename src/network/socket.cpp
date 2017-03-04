@@ -1,6 +1,7 @@
 #include <memory>
 #include <unistd.h>
 #include <cstdlib>
+#include <sys/stat.h>
 
 #include "socket.h"
 #include "util/logger.h"
@@ -50,6 +51,8 @@ void Socket::BindSocket()
     Logger::LogError("binding socket failed.");
     exit(EXIT_FAILURE);
   }
+
+  chmod(this->socket_path, 0777);
 }
 
 void Socket::ListenSocket()

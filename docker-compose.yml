@@ -1,0 +1,15 @@
+version: '2'
+services:
+  alexey:
+    build: .
+    volumes:
+      - "/opt/data:/var/run"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "5296:5296"
+    links:
+      - alexey
+    volumes_from:
+      - alexey
