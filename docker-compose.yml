@@ -4,6 +4,8 @@ services:
     build: .
     volumes:
       - "/opt/data:/var/run"
+    links:
+      - redis
 
   nginx:
     build: ./nginx
@@ -13,3 +15,6 @@ services:
       - alexey
     volumes_from:
       - alexey
+
+  redis:
+    image: redis:alpine
