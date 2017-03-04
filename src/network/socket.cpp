@@ -4,6 +4,7 @@
 
 #include "socket.h"
 #include "util/logger.h"
+#include <errno.h>
 
 using namespace Network;
 using namespace Util;
@@ -27,8 +28,8 @@ void Socket::CreateSocket()
 
   if (socket_fd_ == -1)
   {
+    perror("socket");
     Logger::LogError("Createing socket failed.");
-
     exit(EXIT_FAILURE);
   }
 }
@@ -43,8 +44,8 @@ void Socket::BindSocket()
 
   if (bind_result == -1)
   {
+    perror("bind");
     Logger::LogError("binding socket failed.");
-
     exit(EXIT_FAILURE);
   }
 }
@@ -55,8 +56,8 @@ void Socket::ListenSocket()
 
   if (listen_result == -1)
   {
+    perror("listen");
     Logger::LogError("listening socket failed.");
-
     exit(EXIT_FAILURE);
   }
 }
