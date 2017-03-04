@@ -36,6 +36,8 @@ void Socket::CreateSocket()
 
 void Socket::BindSocket()
 {
+  CleanUpSock();
+
   int bind_result = bind(
     this->socket_fd_,
     reinterpret_cast<sockaddr *>(&this->addr_),
@@ -65,13 +67,18 @@ void Socket::ListenSocket()
 void Socket::CloseSocket()
 {
   close(socket_fd_);
-  unlink(this->socket_path);
+  CleanUpSock();
 }
 
 void Socket::InitSockAddr()
 {
   this->addr_.sun_family = AF_UNIX;
   strcpy(this->addr_.sun_path, this->socket_path);
+}
+
+void Socket::CleanUpSock()
+{
+  unlink(this->socket_path);
 }
 
 int Socket::GetSocketFd() const

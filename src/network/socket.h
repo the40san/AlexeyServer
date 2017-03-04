@@ -30,6 +30,7 @@ class Socket
 
  private:
   void InitSockAddr();
+  void CleanUpSock();
 };
 
 }
