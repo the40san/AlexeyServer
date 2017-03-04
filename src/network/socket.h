@@ -26,7 +26,7 @@ class Socket
   int socket_fd_;
 
   const int socket_backlog = 1024;
-  const char * socket_path = "/tmp/alexey_server.sock";
+  const char * socket_path = "/var/run/alexey_server.sock";
 
  private:
   void InitSockAddr();
