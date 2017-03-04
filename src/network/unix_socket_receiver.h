@@ -17,7 +17,6 @@ class UnixSocketReceiver
  private:
   std::shared_ptr<Network::Socket> socket_;
 
-  int accept_socket_fd_;
   static const std::size_t default_buffer_size = 4096;
 };
 

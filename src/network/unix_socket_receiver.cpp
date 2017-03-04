@@ -30,9 +30,9 @@ bool UnixSocketReceiver::Accept()
     return false;
   }
 
-  this->accept_socket_fd_ = accept(socket_->GetSocketFd(), NULL, NULL);
+  int accept_socket_fd = accept(socket_->GetSocketFd(), NULL, NULL);
 
-  if (this->accept_socket_fd_ == -1)
+  if (accept_socket_fd == -1)
   {
     Logger::LogError("Accepting socket failed.");
 
@@ -41,9 +41,11 @@ bool UnixSocketReceiver::Accept()
 
   char buffer[UnixSocketReceiver::default_buffer_size];
   memset(buffer, 0, sizeof(buffer));
-  read(accept_socket_fd_, buffer, sizeof(buffer));
+  read(accept_socket_fd, buffer, sizeof(buffer));
 
   ParseMessage(buffer);
+
+  close(accept_socket_fd);
 
   return true;
 }
