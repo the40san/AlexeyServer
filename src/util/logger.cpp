@@ -14,7 +14,12 @@ void Util::Logger::LogError(const std::string &message)
   std::cerr << "[ERROR]" << message << std::endl;
 }
 
-void Util::Logger::Log(const std::string &message)
+void Util::Logger::LogDebug(const std::string &message)
 {
   std::cerr << "[DEBUG]" << message << std::endl;
+}
+
+void Util::Logger::Log(const std::string &message)
+{
+  std::cerr << "[INFO]" << message << std::endl;
 }
