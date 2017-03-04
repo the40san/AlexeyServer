@@ -12,6 +12,7 @@ int main(int argc, char **argv)
   signal(SIGINT,  SignalHandler);
   signal(SIGTERM, SignalHandler);
   signal(SIGUSR1, SignalHandler);
+  signal(SIGQUIT, SignalHandler);
   std::unique_ptr<Server> server(new Server());
   server->run();
 
