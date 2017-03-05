@@ -17,7 +17,6 @@ RUN git submodule init && git submodule update && mkdir build
 WORKDIR build
 RUN cmake ../ && make && make install
 
-
 COPY . /alexey
 WORKDIR /alexey/src
 RUN mkdir __build

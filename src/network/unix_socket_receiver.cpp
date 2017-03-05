@@ -43,7 +43,7 @@ bool UnixSocketReceiver::Accept()
   memset(buffer, 0, sizeof(buffer));
   read(accept_socket_fd, buffer, sizeof(buffer));
 
-  ParseMessage(buffer);
+  WriteResponse(buffer, accept_socket_fd);
 
   close(accept_socket_fd);
 
@@ -51,7 +51,19 @@ bool UnixSocketReceiver::Accept()
 }
 
 
-void UnixSocketReceiver::ParseMessage(char *data)
+void UnixSocketReceiver::WriteResponse(char *data, int accept_socket_fd)
 {
   Message::Parser parser(data);
+  std::shared_ptr<Message::Response> response = parser.GetResponse();
+
+  if (response == nullptr)
+  {
+    return;
+  }
+
+  if (response->HasResponse())
+  {
+    std::string payload = response->GetPayload();
+    write(accept_socket_fd, payload.data(), payload.size());
+  }
 }

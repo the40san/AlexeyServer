@@ -12,7 +12,7 @@ class UnixSocketReceiver
   bool Accept();
 
  private:
-  void ParseMessage(char *data);
+  void WriteResponse(char *data, int accept_socket_fd);
 
  private:
   std::shared_ptr<Network::Socket> socket_;

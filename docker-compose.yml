@@ -6,6 +6,8 @@ services:
       - "/opt/data:/var/run"
     links:
       - redis
+    environment:
+      REDIS_HOST: "redis"
 
   nginx:
     build: ./nginx
