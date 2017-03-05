@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "parser.h"
+#include "score.h"
 
 using namespace Message;
 
@@ -20,7 +21,10 @@ void Parser::ParseMessagePack()
   msgpack::object deserialized = result.get();
 
   // TODO: parse message
-  msgpack::type::tuple<uint64_t> dst;
+  msgpack::type::tuple<uint32_t> dst;
   deserialized.convert(dst);
   std::cout << dst.get<0>() << std::endl;
+
+  Score score;
+  score.Post(dst.get<0>());
 }
