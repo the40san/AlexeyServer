@@ -1,17 +1,19 @@
 #include <msgpack.hpp>
 #include <iostream>
+#include <memory>
 
 #include "parser.h"
+#include "update_high_score.h"
+#include "get_high_score.h"
 
 using namespace Message;
 
 Parser::Parser(char *data)
   :raw_data_(data)
 {
-  ParseMessagePack();
 }
 
-void Parser::ParseMessagePack()
+std::shared_ptr<Response> Parser::GetResponse()
 {
   msgpack::object_handle result;
 
@@ -19,8 +21,17 @@ void Parser::ParseMessagePack()
 
   msgpack::object deserialized = result.get();
 
-  // TODO: parse message
-  msgpack::type::tuple<uint64_t> dst;
+  msgpack::type::tuple<uint32_t> dst;
   deserialized.convert(dst);
-  std::cout << dst.get<0>() << std::endl;
+
+  switch(dst.get<0>())
+  {
+    case Parser::RPC_UPDATE_HIGH_SCORE:
+      return std::static_pointer_cast<Response>( std::make_shared<UpdateHighScore>(deserialized) );
+    case Parser::RPC_GET_HIGH_SCORE:
+      return std::static_pointer_cast<Response>( std::make_shared<GetHighScore>() );
+
+  }
+
+  return nullptr;
 }
