@@ -5,6 +5,7 @@
 #include "parser.h"
 #include "update_high_score.h"
 #include "get_high_score.h"
+#include "util/logger.h"
 
 using namespace Message;
 
@@ -16,13 +17,20 @@ Parser::Parser(char *data)
 std::shared_ptr<Response> Parser::GetResponse()
 {
   msgpack::object_handle result;
-
-  msgpack::unpack(result, raw_data_, sizeof(raw_data_));
-
-  msgpack::object deserialized = result.get();
-
+  msgpack::object deserialized;
   msgpack::type::tuple<uint32_t> dst;
-  deserialized.convert(dst);
+
+  try
+  {
+    msgpack::unpack(result, raw_data_, sizeof(raw_data_));
+    deserialized = result.get();
+    deserialized.convert(dst);
+  }
+  catch(std::exception &e)
+  {
+    Util::Logger::LogError(e.what());
+    return nullptr;
+  }
 
   switch(dst.get<0>())
   {
