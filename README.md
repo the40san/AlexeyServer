@@ -5,7 +5,8 @@ ScoreServer for Alexey
 ## Docker
 
 ```
-docker-compose build up
+docker-compose build 
+docker-compose up
 ```
 
 
